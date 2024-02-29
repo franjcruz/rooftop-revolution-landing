@@ -1,5 +1,5 @@
 <template>
-  <v-parallax id="main-image" src="solar-power-rooftop.jpg" height="750">
+  <v-parallax src="solar-power-rooftop.jpg" height="750">
     <v-card class="card-form ma-15 align-middle float-end">
       <v-card-title>
         Check if your rooftop is suitable for solar panels
@@ -31,10 +31,6 @@
 </template>
 
 <style scoped>
-#main-image > div.v-responsive__sizer {
-  background: linear-gradient(to right bottom, transparent, #ed85044d);
-}
-
 .card-form {
   border-radius: 10px;
 }

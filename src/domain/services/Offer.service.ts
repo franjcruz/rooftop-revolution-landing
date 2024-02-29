@@ -12,6 +12,12 @@
 
 import { Client, SupplyPoint } from "@/domain/entities";
 
+/**
+ * Determines if a client is eligible based on their information and supply points.
+ * @param client - The client object.
+ * @param supplyPoints - The array of supply points.
+ * @returns True if the client is eligible, false otherwise.
+ */
 const isClientEligible = (
   client: Client,
   supplyPoints: SupplyPoint[]
@@ -23,6 +29,13 @@ const isClientEligible = (
   return clientSupplyPoint.neighbors.length > 0;
 };
 
+/**
+ * Calculates the discount for a client based on their supply points.
+ * @param client - The client for whom the discount is being calculated.
+ * @param supplyPoints - The list of supply points.
+ * @returns The type of discount: "Special discount", "Basic discount", or "Standard offer".
+ * @throws Error if the client's supply point is not found.
+ */
 const getDiscount = (client: Client, supplyPoints: SupplyPoint[]): string => {
   const clientSupplyPoint = supplyPoints.find((sp) => sp.cups === client.cups);
   if (!clientSupplyPoint) {

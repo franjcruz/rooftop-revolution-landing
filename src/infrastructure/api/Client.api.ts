@@ -1,12 +1,25 @@
 import { ClientDTO } from "../dto";
 import ClientsData from "../data/clients.json";
 
+/**
+ * Service for interacting with the Client API.
+ */
 export const ClientApiService = {
+  /**
+   * Retrieves all clients.
+   * @returns A promise that resolves to an array of ClientDTO objects.
+   */
   async getClients(): Promise<ClientDTO[]> {
     const clients = await getClientsData();
 
     return clients;
   },
+
+  /**
+   * Retrieves a client by their cups.
+   * @param cups - The cups of the client.
+   * @returns A promise that resolves to a ClientDTO object if found, or null otherwise.
+   */
   async getClient(cups: string): Promise<ClientDTO | null> {
     const clients = await getClientsData();
     const client = clients.find((client) => client.cups === cups);

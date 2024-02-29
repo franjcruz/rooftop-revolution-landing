@@ -1,12 +1,25 @@
 import { SupplyPointDTO } from "../dto";
 import SupplyPointsData from "../data/supply-points.json";
 
+/**
+ * Service for interacting with the Supply Point API.
+ */
 export const SupplyPointApiService = {
+  /**
+   * Retrieves all supply points.
+   * @returns A promise that resolves to an array of SupplyPointDTO objects.
+   */
   async getSupplyPoints(): Promise<SupplyPointDTO[]> {
     const supplyPoints = await getSupplyPointsData();
 
     return supplyPoints;
   },
+
+  /**
+   * Retrieves a supply point by its CUPS identifier.
+   * @param cups - The CUPS identifier of the supply point.
+   * @returns A promise that resolves to a SupplyPointDTO object, or null if not found.
+   */
   async getSupplyPoint(cups: string): Promise<SupplyPointDTO | null> {
     const supplyPoints = await getSupplyPointsData();
     const supplyPoint = supplyPoints.find((sp) => sp.cups === cups);
