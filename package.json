@@ -11,7 +11,8 @@
   "dependencies": {
     "@holaluz/margarita": "^23.1.1",
     "core-js": "^3.8.3",
-    "vue": "^3.2.13"
+    "vue": "^3.2.13",
+    "vuetify": "^3.5.6"
   },
   "devDependencies": {
     "@types/jest": "^27.0.1",

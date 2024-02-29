@@ -8107,6 +8107,11 @@ vue@^3.2.13:
     "@vue/server-renderer" "3.4.19"
     "@vue/shared" "3.4.19"
 
+vuetify@^3.5.6:
+  version "3.5.6"
+  resolved "https://abbrobotics.pkgs.visualstudio.com/DigitalFactory/_packaging/DigitalFactory/npm/registry/vuetify/-/vuetify-3.5.6.tgz#cdf8859ab3cc746c78f703db9ec4ea26f3d54757"
+  integrity sha1-zfiFmrPMdGx49wPbnsTqJvPVR1c=
+
 w3c-hr-time@^1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/w3c-hr-time/-/w3c-hr-time-1.0.2.tgz"
