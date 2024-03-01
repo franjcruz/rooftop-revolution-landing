@@ -2,11 +2,11 @@
   <v-parallax src="solar-power-rooftop.jpg" height="750">
     <v-card
       class="card-form align-middle float-end"
-      max-width="600"
-      max-height="600"
+      width="600"
+      max-height="800"
     >
-      <v-card-title> Get enrolled with the rooftop revolution! </v-card-title>
-      <v-card-text>
+      <v-card-title> {{ result || title }} </v-card-title>
+      <v-card-text v-if="!result">
         Check if your rooftop condition is suitable for solar panels and if you
         are able to get a offer. Just enter your CUPS number and we will check.
       </v-card-text>
@@ -23,48 +23,34 @@
             :rules="cupsRules"
             hide-details="auto"
           ></v-text-field>
-          <v-divider></v-divider>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn
-              color="success"
-              variant="tonal"
-              type="submit"
-              :disabled="!valid"
-              form="check-form"
-            >
-              Check
-            </v-btn>
-          </v-card-actions>
         </v-container>
       </v-form>
-      <div v-if="getResult">
+      <div v-if="result">
         <v-row>
-          <v-col cols="12" sm="6">
-            <v-list lines="one">
-              <v-list-item
-                v-for="(key, value) in client"
-                :key="key"
-                :title="key"
-                :subtitle="value"
-              ></v-list-item>
-            </v-list>
+          <v-col v-if="client" cols="12" sm="6">
+            <client-list :client="client" />
           </v-col>
-          <v-col cols="12" sm="6">
-            <v-list lines="one">
-              <v-list-item
-                v-for="(key, value) in supplyPoint"
-                :key="key"
-                :title="key"
-                :subtitle="value"
-              ></v-list-item>
-            </v-list>
+          <v-col v-if="supplyPoint" cols="12" sm="6">
+            <supply-point-list :supplyPoint="supplyPoint" />
           </v-col>
         </v-row>
-        <v-card-text>
-          {{ getResult }}
-        </v-card-text>
       </div>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn
+          v-if="!result"
+          color="success"
+          variant="tonal"
+          type="submit"
+          :disabled="!valid"
+          form="check-form"
+        >
+          Check
+        </v-btn>
+        <v-btn v-if="result" variant="tonal" @click="resetHandler">
+          Reset
+        </v-btn>
+      </v-card-actions>
     </v-card>
   </v-parallax>
 </template>
@@ -77,15 +63,18 @@
 </style>
 
 <script lang="ts">
+import { defineComponent } from "vue";
 import { Client, SupplyPoint } from "@/domain/entities";
 import { GetClientOffer } from "@/application/usercases";
 import {
   ClientRepositoryImplementation,
   SupplyPointRepositoryImplementation,
 } from "@/infrastructure/repositories";
-import { defineComponent } from "vue";
+import { ClientList } from "../ClientList";
+import { SupplyPointList } from "../SupplyPointList";
 
 export default defineComponent({
+  components: { ClientList, SupplyPointList },
   name: "LandingTop",
   data: () => ({
     valid: true,
@@ -97,6 +86,7 @@ export default defineComponent({
       (v: string) => !!v || "CUPS is required",
       (v: string) => (v && v.length === 6) || "CUPS must be 6 characters",
     ],
+    title: "Get enrolled with the rooftop revolution!",
   }),
   methods: {
     async submitHandler() {
@@ -112,17 +102,38 @@ export default defineComponent({
         await SupplyPointRepositoryImplementation.getAll();
 
       if (this.client && this.supplyPoint) {
-        this.result = GetClientOffer(
+        const keyResult = GetClientOffer(
           this.client,
           this.supplyPoint,
           allSupplyPoints
         );
-      }
 
-      // this.result = "You have the possibility to enroll! You get a discount of 5%!";
-      // this.result = "You have the possibility to enroll! You get a discount of 15%!";
-      // this.result = "You have the possibility to enroll!";
-      // this.result = "Sorry, you are not elegible to enroll on this program.";
+        switch (keyResult) {
+          case "NOT_ELIGIBLE":
+            this.result =
+              "Sorry, you are not elegible to enroll on this program.";
+            break;
+          case "STANDARD_OFFER":
+            this.result = "You have the possibility to enroll!";
+            break;
+          case "BASIC_DISCOUNT":
+            this.result =
+              "You have the possibility to enroll! You get a discount of 5%!";
+            break;
+          case "SPECIAL_DISCOUNT":
+            this.result =
+              "You have the possibility to enroll! You get a discount of 15%!";
+            break;
+          default:
+            break;
+        }
+      } else {
+        this.result = "Sorry, we didn't found a client with this CUPS.";
+      }
+    },
+    resetHandler() {
+      this.result = "";
+      this.cups = "";
     },
   },
   computed: {

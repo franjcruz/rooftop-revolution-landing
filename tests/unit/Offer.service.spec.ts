@@ -112,17 +112,27 @@ describe("getDiscount()", () => {
           p1: 100,
           p2: 100,
         },
-        neighbors: ["9876543210123456"],
+        neighbors: ["9876543210123456", "5681237963314"],
       },
       {
         cups: "9876543210123456",
         tariff: "Two price",
-        invoicedAmount: 140,
+        invoicedAmount: 45,
+        power: {
+          p1: 65,
+          p2: 65,
+        },
+        neighbors: ["5681237963314"],
+      },
+      {
+        cups: "5681237963314",
+        tariff: "Two price",
+        invoicedAmount: 75,
         power: {
           p1: 85,
           p2: 85,
         },
-        neighbors: ["5681237963314"],
+        neighbors: ["1234567890123456"],
       },
     ];
     expect(getDiscount(client, supplyPoints)).toBe("SPECIAL_DISCOUNT");

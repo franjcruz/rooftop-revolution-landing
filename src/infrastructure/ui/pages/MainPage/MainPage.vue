@@ -1,9 +1,9 @@
 <template>
-  <RRHeader />
+  <r-r-header />
   <v-main>
-    <LandingTop />
-    <LandingContent />
-    <RRFooter />
+    <landing-top />
+    <landing-content />
+    <r-r-footer />
   </v-main>
 </template>
 
