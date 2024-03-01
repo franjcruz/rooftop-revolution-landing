@@ -15,14 +15,13 @@ import { Client, SupplyPoint } from "@/domain/entities";
 /**
  * Determines if a client is eligible based on their information and supply points.
  * @param client - The client object.
- * @param supplyPoints - The array of supply points.
+ * @param clientSupplyPoint - The client's supply point.
  * @returns True if the client is eligible, false otherwise.
  */
 const isClientEligible = (
   client: Client,
-  supplyPoints: SupplyPoint[]
+  clientSupplyPoint: SupplyPoint
 ): boolean => {
-  const clientSupplyPoint = supplyPoints.find((sp) => sp.cups === client.cups);
   if (client.buildingType !== "house" || !clientSupplyPoint) {
     return false;
   }
@@ -60,13 +59,13 @@ const getDiscount = (client: Client, supplyPoints: SupplyPoint[]): string => {
     );
 
     if (isBasicDiscountEligible && neighborsInvoicedAmount > 100) {
-      return "Special discount";
+      return "SPECIAL_DISCOUNT";
     } else if (isBasicDiscountEligible) {
-      return "Basic discount";
+      return "BASIC_DISCOUNT";
     }
   }
 
-  return "Standard offer";
+  return "STANDARD_OFFER";
 };
 
 export { isClientEligible, getDiscount };

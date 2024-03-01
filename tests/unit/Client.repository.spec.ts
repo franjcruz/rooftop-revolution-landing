@@ -1,5 +1,5 @@
 import { ClientApiService } from "@/infrastructure/api";
-import { InMemoryClientRepository } from "@/infrastructure/repositories";
+import { ClientRepositoryImplementation } from "@/infrastructure/repositories";
 
 jest.mock("../../src/infrastructure/api/Client.api", () => ({
   ClientApiService: {
@@ -31,14 +31,16 @@ jest.mock("../../src/infrastructure/api/Client.api", () => ({
 
 describe("InMemoryClientRepository", () => {
   it("should return a list of clients", async () => {
-    const clients = await InMemoryClientRepository.getAll();
+    const clients = await ClientRepositoryImplementation.getAll();
     expect(clients).toBeInstanceOf(Array);
     expect(clients).toHaveLength(2);
     expect(clients[0]).toHaveProperty("cups");
   });
 
   it("should return a client by its cups", async () => {
-    const client = await InMemoryClientRepository.getById("1234567890123456");
+    const client = await ClientRepositoryImplementation.getById(
+      "1234567890123456"
+    );
     expect(client).toEqual({
       cups: "1234567890123456",
       fullname: "John Doe",
@@ -50,7 +52,7 @@ describe("InMemoryClientRepository", () => {
 
   it("should return null due to cups is not associated to client", async () => {
     jest.spyOn(ClientApiService, "getClient").mockResolvedValueOnce(null);
-    const client = await InMemoryClientRepository.getById("11111111111");
+    const client = await ClientRepositoryImplementation.getById("11111111111");
     expect(client).toBeNull();
   });
 });

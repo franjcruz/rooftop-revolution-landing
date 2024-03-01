@@ -1,2 +1,2 @@
-export * from "./Client.inMemory.repository";
-export * from "./SupplyPoint.inMemory.repository";
+export * from "./Client.repository";
+export * from "./SupplyPoint.repository";

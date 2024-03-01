@@ -6,7 +6,7 @@ import { SupplyPointApiService } from "../api";
 /**
  * In-memory implementation of the SupplyPointRepository interface.
  */
-export const InMemorySupplyPointRepository: SupplyPointRepository = {
+export const SupplyPointRepositoryImplementation: SupplyPointRepository = {
   /**
    * Retrieves a supply point by its cups identifier.
    * @param cups - The cups identifier of the supply point.

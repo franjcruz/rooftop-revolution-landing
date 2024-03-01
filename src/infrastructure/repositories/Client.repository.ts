@@ -6,7 +6,7 @@ import { ClientDTO } from "../dto";
 /**
  * In-memory implementation of the ClientRepository interface.
  */
-export const InMemoryClientRepository: ClientRepository = {
+export const ClientRepositoryImplementation: ClientRepository = {
   /**
    * Retrieves a client by their cups identifier.
    * @param cups - The cups identifier of the client.

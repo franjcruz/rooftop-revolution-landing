@@ -1,5 +1,5 @@
 import { SupplyPointApiService } from "@/infrastructure/api";
-import { InMemorySupplyPointRepository } from "@/infrastructure/repositories";
+import { SupplyPointRepositoryImplementation } from "@/infrastructure/repositories";
 
 jest.mock("../../src/infrastructure/api/SupplyPoint.api", () => ({
   SupplyPointApiService: {
@@ -40,14 +40,14 @@ jest.mock("../../src/infrastructure/api/SupplyPoint.api", () => ({
 
 describe("InMemorySupplyPointRepository", () => {
   it("should return a list of supplyPoints", async () => {
-    const supplyPoints = await InMemorySupplyPointRepository.getAll();
+    const supplyPoints = await SupplyPointRepositoryImplementation.getAll();
     expect(supplyPoints).toBeInstanceOf(Array);
     expect(supplyPoints).toHaveLength(2);
     expect(supplyPoints[0]).toHaveProperty("cups");
   });
 
   it("should return a supplyPoint by its cups", async () => {
-    const supplyPoint = await InMemorySupplyPointRepository.getById(
+    const supplyPoint = await SupplyPointRepositoryImplementation.getById(
       "1234567890123456"
     );
     expect(supplyPoint).toEqual({
@@ -66,7 +66,7 @@ describe("InMemorySupplyPointRepository", () => {
     jest
       .spyOn(SupplyPointApiService, "getSupplyPoint")
       .mockResolvedValueOnce(null);
-    const supplyPoint = await InMemorySupplyPointRepository.getById(
+    const supplyPoint = await SupplyPointRepositoryImplementation.getById(
       "11111111111"
     );
     expect(supplyPoint).toBeNull();

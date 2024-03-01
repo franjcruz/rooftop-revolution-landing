@@ -10,19 +10,18 @@ describe("isClientEligible()", () => {
       role: "customer",
       buildingType: "house",
     };
-    const supplyPoints: SupplyPoint[] = [
-      {
-        cups: "1234567890123456",
-        tariff: "One price",
-        invoicedAmount: 50,
-        power: {
-          p1: 100,
-          p2: 100,
-        },
-        neighbors: ["9876543210123456", "3412567893456546"],
+    const supplyPoint: SupplyPoint = {
+      cups: "1234567890123456",
+      tariff: "One price",
+      invoicedAmount: 50,
+      power: {
+        p1: 100,
+        p2: 100,
       },
-    ];
-    expect(isClientEligible(client, supplyPoints)).toBe(true);
+      neighbors: ["9876543210123456", "3412567893456546"],
+    };
+
+    expect(isClientEligible(client, supplyPoint)).toBe(true);
   });
 
   it("should return false if client is not eligible due to building type", () => {
@@ -33,19 +32,17 @@ describe("isClientEligible()", () => {
       role: "customer",
       buildingType: "apartment",
     };
-    const supplyPoints: SupplyPoint[] = [
-      {
-        cups: "9876543210123456",
-        tariff: "Two price",
-        invoicedAmount: 40,
-        power: {
-          p1: 85,
-          p2: 85,
-        },
-        neighbors: ["5681237963314"],
+    const supplyPoint: SupplyPoint = {
+      cups: "9876543210123456",
+      tariff: "Two price",
+      invoicedAmount: 40,
+      power: {
+        p1: 85,
+        p2: 85,
       },
-    ];
-    expect(isClientEligible(client, supplyPoints)).toBe(false);
+      neighbors: ["5681237963314"],
+    };
+    expect(isClientEligible(client, supplyPoint)).toBe(false);
   });
 
   it("should return false if client is not eligible due to lack of neighbors", () => {
@@ -56,19 +53,17 @@ describe("isClientEligible()", () => {
       role: "customer",
       buildingType: "house",
     };
-    const supplyPoints: SupplyPoint[] = [
-      {
-        cups: "1234567890123456",
-        tariff: "One price",
-        invoicedAmount: 50,
-        power: {
-          p1: 100,
-          p2: 100,
-        },
-        neighbors: [],
+    const supplyPoint: SupplyPoint = {
+      cups: "1234567890123456",
+      tariff: "One price",
+      invoicedAmount: 50,
+      power: {
+        p1: 100,
+        p2: 100,
       },
-    ];
-    expect(isClientEligible(client, supplyPoints)).toBe(false);
+      neighbors: [],
+    };
+    expect(isClientEligible(client, supplyPoint)).toBe(false);
   });
 });
 
@@ -100,7 +95,7 @@ describe("getDiscount()", () => {
     }
   });
 
-  it("should return the correct discount value (Special discount)", () => {
+  it("should return the correct discount value (SPECIAL_DISCOUNT)", () => {
     const client: Client = {
       fullname: "John Doe",
       address: "Calle Falsa 123",
@@ -130,10 +125,10 @@ describe("getDiscount()", () => {
         neighbors: ["5681237963314"],
       },
     ];
-    expect(getDiscount(client, supplyPoints)).toBe("Special discount");
+    expect(getDiscount(client, supplyPoints)).toBe("SPECIAL_DISCOUNT");
   });
 
-  it("should return the correct discount value (Basic discount)", () => {
+  it("should return the correct discount value (BASIC_DISCOUNT)", () => {
     const client: Client = {
       fullname: "John Doe",
       address: "Calle Falsa 123",
@@ -163,10 +158,10 @@ describe("getDiscount()", () => {
         neighbors: ["5681237963314"],
       },
     ];
-    expect(getDiscount(client, supplyPoints)).toBe("Basic discount");
+    expect(getDiscount(client, supplyPoints)).toBe("BASIC_DISCOUNT");
   });
 
-  it("should return the correct discount value (Standard offer)", () => {
+  it("should return the correct discount value (STANDARD_OFFER)", () => {
     const client: Client = {
       fullname: "John Doe",
       address: "Calle Falsa 123",
@@ -196,6 +191,6 @@ describe("getDiscount()", () => {
         neighbors: ["5681237963314"],
       },
     ];
-    expect(getDiscount(client, supplyPoints)).toBe("Standard offer");
+    expect(getDiscount(client, supplyPoints)).toBe("STANDARD_OFFER");
   });
 });
