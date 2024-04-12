@@ -6,7 +6,8 @@ jobs:
     steps:
       - name: Check coverage increased
         uses: franjcruz/check-if-coverage-increased-action@v0.3
+        id: check
         with:
           who-to-greet: 'Mona the Octocat'
       - name: Get the output time
-        run: echo "The time was ${{ steps.hello.outputs.time }}"
+        run: echo "The time was ${{ steps.check.outputs.time }}"
