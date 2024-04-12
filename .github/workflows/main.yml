@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check coverage increased
-        uses: franjcruz/check-if-coverage-increased-action@v0.2
+        uses: franjcruz/check-if-coverage-increased-action@v0.3
         with:
           who-to-greet: 'Mona the Octocat'
       - name: Get the output time
