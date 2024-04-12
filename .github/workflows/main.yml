@@ -3,13 +3,10 @@ on: [push]
 jobs:
   coverage:
     runs-on: ubuntu-latest
-    name: A job to say hello
     steps:
-        name: Check coverage increased
-        id: hello
+      - name: Check coverage increased
         uses: franjcruz/check-if-coverage-increased-action@v0.2
         with:
           who-to-greet: 'Mona the Octocat'
-      # Use the output from the `hello` step
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.time }}"
